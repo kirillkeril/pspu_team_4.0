@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start:dev": "nodemon index.js",
-    "start:build": "node index.js"
+    "start:prod": "node index.js"
   },
   "keywords": [],
   "author": "",

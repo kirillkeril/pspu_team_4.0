@@ -25,8 +25,8 @@ app.use(errorsMiddleware);
 const bootstrap = async () => {
     try {
         await mongoose.connect(DB_CONNECTION);
-        app.listen(3000, () => {
-            console.log(`Server has been started on port ${PORT}`)
+        app.listen(process.env.PORT, () => {
+            console.log(`Server has been started on ${process.env.API_PATH}:${PORT}`)
         })
     } catch (e) {
         console.log(e)

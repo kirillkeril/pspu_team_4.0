@@ -5,3 +5,5 @@
 .env
 
 .idea
+dockerfile
+docker-compose.yaml
