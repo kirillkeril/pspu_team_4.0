@@ -20,6 +20,6 @@ usersRouter.get('/refresh', userController.refresh);
 
 usersRouter.get('/activate/:link', userController.activate);
 // Test users router
-usersRouter.get('/users', authMiddleware, userController.getUsers);
+usersRouter.get('/', authMiddleware, userController.getUsers);
 
 export default usersRouter;

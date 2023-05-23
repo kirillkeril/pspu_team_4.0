@@ -3,12 +3,12 @@ import TokenModel from "../models/token-model.js";
 import tokenModel from "../models/token-model.js";
 
 class TokenService {
-    maxAge = 30;
-    maxAgeForCookie = this.maxAge * 24 * 60 * 60 * 1000;
+    refreshMaxAge = 30;
+    refreshMaxAgeForCookie = this.refreshMaxAge * 24 * 60 * 60 * 1000;
 
     async generateToken(payload) {
-        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECKET, {expiresIn: '10m'});
-        const refreshToken = jwt.sign(payload, process.env.JWT_ACCESS_SECKET, {expiresIn: `${this.maxAge}d`});
+        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECKET, {expiresIn: '5m'});
+        const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: `${this.refreshMaxAge}d`});
 
         return {
             refreshToken,
@@ -39,7 +39,7 @@ class TokenService {
         }
     }
     async findToken(refreshToken){
-        return await tokenModel.findOne({refreshToken: refreshToken});
+        return tokenModel.findOne({refreshToken: refreshToken});
     }
 
     async validateRefreshToken(token) {
