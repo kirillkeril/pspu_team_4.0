@@ -27,12 +27,12 @@ class UserService {
     }
 
     async activate(activationLink) {
-        const user = userModel.findOne({activationLink: activationLink});
+        const user = await userModel.findOne({activationLink: activationLink});
         if (!user) {
             throw ApiErrors.BadRequest("Invalid activation link");
         }
         user.isActivated = true;
-        await user.save();
+        user.save();
     }
 
 
@@ -79,6 +79,32 @@ class UserService {
 
     async getUsers() {
         return userModel.find();
+    }
+
+    async setUserRole(userId, role) {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            throw ApiErrors.BadRequest("There are no users with this id");
+        }
+        if (user.roles.includes(role)) {
+            return user;
+        }
+
+        user.roles = [...user.roles, role];
+        await user.save();
+        const userDto = new UserDto(user);
+        const tokens = await tokenService.generateToken({...userDto});
+
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {...tokens, user: userDto};
+    }
+
+    async deleteUser(userId) {
+        const user = await UserModel.findById(userId);
+        if (!user) throw  ApiErrors.BadRequest("There are no users with this id");
+
+        return user.deleteOne({id: userId});
     }
 }
 

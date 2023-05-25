@@ -12,4 +12,8 @@ export default class ApiErrors extends Error{
     static BadRequest(message, errors) {
         return new ApiErrors(400, message, errors);
     }
+
+    static Forbidden() {
+        return new ApiErrors(403, "Forbidden");
+    }
 }

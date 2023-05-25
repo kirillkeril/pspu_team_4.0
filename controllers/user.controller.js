@@ -66,6 +66,27 @@ class UserController {
             next(e);
         }
     }
+
+    async setRole(req, res, next) {
+        try{
+            const userId = req.params.id;
+            const userData = await userService.setUserRole(userId, req.body.role);
+            res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: tokenService.refreshMaxAgeForCookie});
+            return res.status(200).json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async deleteUser(req, res, next) {
+        try {
+            const userId = req.params.id;
+            const user = await userService.deleteUser(userId);
+            return res.status(200);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new UserController();
