@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
 app.use('/api/products', productRouter);
-
+app.use(express.static('build'));
 app.use(errorsMiddleware);
 
 
