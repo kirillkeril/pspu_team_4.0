@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {productRouter, usersRouter} from "./routes/index.js";
+import {articleRouter, productRouter, usersRouter} from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import mongoose from 'mongoose';
 import errorsMiddleware from "./middleware/error-midlevare.js";
@@ -15,13 +15,14 @@ const DB_CONNECTION = process.env.DB_CONNECTION;
 
 app.use(cors({
     credentials: true,
-    origin: '*'
+    origin: process.env.CLIENT_URL
 }));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
 app.use('/api/products', productRouter);
+app.use('/api/articles', articleRouter);
 app.use(express.static('build'));
 app.use(errorsMiddleware);
 

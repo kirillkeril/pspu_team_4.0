@@ -2,7 +2,7 @@ import {Schema, model} from "mongoose";
 
 const UserSchema = new Schema({
     email: {required: true, unique: true, type: String},
-    name: {required: true, type: String},
+    name: {type: String},
     password: {required: true, type: String},
     isActivated: {type: Boolean, default: true},
     activationLink: {type: String},

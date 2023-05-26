@@ -33,7 +33,7 @@ class ProductService {
             if (!prevProduct) throw new ApiErrors(404, "Not found");
             const productDto = new ProductDto(productData);
 
-            Object.keys(productDto).map((key, value) => {
+            Object.keys(productDto).map((key) => {
                 prevProduct[key] = productDto[key];
             });
 
