@@ -6,7 +6,7 @@ const articleRouter = Router();
 articleRouter.get('/', ArticleController.getAll);
 articleRouter.get('/:id', ArticleController.getById);
 articleRouter.post('/new', ArticleController.addNew);
-articleRouter.put('/update', ArticleController.update);
+articleRouter.put('/update/:id', ArticleController.update);
 articleRouter.delete('/delete/:id', ArticleController.delete);
 
 export default articleRouter;

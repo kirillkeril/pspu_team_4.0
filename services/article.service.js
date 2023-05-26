@@ -15,10 +15,14 @@ class ArticleService {
         return article;
     }
     async update(articleData, id) {
-        const articleDto = new ArticleDto({...articleData});
-        const article = ArticleModel.findById(id);
+        const article = await ArticleModel.findById(id);
         if (!article) throw new ApiErrors(404, "Not found");
-        Object.keys(articleDto).map(key => article[key] = articleDto[key]);
+        const articleDto = new ArticleDto({...articleData});
+
+        Object.keys(articleDto).map(key => {
+            article[key] = articleDto[key]
+        });
+
         await article.save();
         return article;
     }
