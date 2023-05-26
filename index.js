@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {usersRouter} from "./routes/index.js";
+import {productRouter, usersRouter} from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import mongoose from 'mongoose';
 import errorsMiddleware from "./middleware/error-midlevare.js";
@@ -13,11 +13,15 @@ const PORT = process.env.PORT;
 const DB_CONNECTION = process.env.DB_CONNECTION;
 
 
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: '*'
+}));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
+app.use('/api/products', productRouter);
 
 app.use(errorsMiddleware);
 
@@ -25,9 +29,9 @@ app.use(errorsMiddleware);
 const bootstrap = async () => {
     try {
         await mongoose.connect(DB_CONNECTION);
-        app.listen(process.env.PORT, () => {
-            console.log(`Server has been started on ${process.env.API_PATH}:${PORT}`)
-        })
+        app.listen(PORT, () => {
+            console.log(`Server has been started on ${process.env.API_PATH}`)
+        });
     } catch (e) {
         console.log(e)
     }

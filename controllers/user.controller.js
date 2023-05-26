@@ -43,7 +43,7 @@ class UserController {
         try {
             const {refreshToken} = req.cookies;
             const userData = await UserService.refresh(refreshToken);
-            res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: tokenService.refreshMaxAgeForCookie});
+            res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: tokenService.refreshMaxAgeForCookie, sameSite: false});
             return res.json(userData);
         } catch (e) {
             next(e);
@@ -71,7 +71,7 @@ class UserController {
         try{
             const userId = req.params.id;
             const userData = await userService.setUserRole(userId, req.body.role);
-            res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: tokenService.refreshMaxAgeForCookie});
+            res.cookie('refreshToken', userData.refreshToken, {httpOnly: true, maxAge: tokenService.refreshMaxAgeForCookie, sameSite: false});
             return res.status(200).json(userData);
         } catch (e) {
             next(e);

@@ -11,7 +11,7 @@ function getRoles(req) {
     return userData.roles;
 }
 
-export const adminOnly = (req, res, next) => {
+const adminOnly = (req, res, next) => {
     try {
         const roles = getRoles(req);
         if (roles.includes('ADMIN')) next();
@@ -21,3 +21,15 @@ export const adminOnly = (req, res, next) => {
         next(e);
     }
 }
+
+const sellerOnly = (req, res, next) => {
+    try {
+        const roles = getRoles(req);
+        if (roles.includes('SELLER')) next();
+
+        return(next(ApiErrors.Forbidden()));
+    } catch (e) {
+        next(e);
+    }
+}
+export {adminOnly, sellerOnly};

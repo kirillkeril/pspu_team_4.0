@@ -77,7 +77,10 @@ class UserService {
         return {...tokens, user: userDto};
     }
 
-    async getUsers() {
+    async getUsers(id = '') {
+        if (id) {
+            return userModel.findById(id);
+        }
         return userModel.find();
     }
 
