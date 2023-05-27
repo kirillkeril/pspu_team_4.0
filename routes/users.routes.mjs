@@ -25,6 +25,6 @@ usersRouter.post('/setRole/:id', userController.setRole);
 
 usersRouter.delete('/delete/:id', authMiddleware, adminOnly, userController.deleteUser);
 // Test users router
-usersRouter.get('/', authMiddleware, userController.getUsers);
+usersRouter.get('/', userController.getUsers);
 
 export default usersRouter;

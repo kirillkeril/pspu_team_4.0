@@ -14,7 +14,7 @@ function getRoles(req) {
 const adminOnly = (req, res, next) => {
     try {
         const roles = getRoles(req);
-        if (roles.includes('ADMIN')) next();
+        if (roles.includes('ADMIN')) return next();
 
         return(next(ApiErrors.Forbidden()));
     } catch (e) {
@@ -25,9 +25,12 @@ const adminOnly = (req, res, next) => {
 const sellerOnly = (req, res, next) => {
     try {
         const roles = getRoles(req);
-        if (roles.includes('SELLER')) next();
+        const farmer = roles.includes('FARMER');
+        if(farmer) {
+            return next();
+        }
 
-        return(next(ApiErrors.Forbidden()));
+        return(next(ApiErrors.Forbidden('',)));
     } catch (e) {
         next(e);
     }

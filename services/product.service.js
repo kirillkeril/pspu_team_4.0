@@ -16,11 +16,11 @@ class ProductService {
             const user = await TokenService.validateRefreshToken(refreshToken);
             if (!user) throw ApiErrors.Unauthorized();
             const productDto = new ProductDto({...newData, seller: user.id});
-            const product = await ProductModel.create({...productDto});
-            return product;
+            await ProductModel.create({...productDto});
+            return;
         } catch (e) {
             console.log(e)
-            throw ApiErrors.BadRequest('Something wrong');
+            throw ApiErrors.BadRequest();
         }
     }
     async deleteProduct(id) {

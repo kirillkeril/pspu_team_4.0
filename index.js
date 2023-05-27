@@ -19,11 +19,11 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('build'));
 
 app.use('/api/users', usersRouter);
 app.use('/api/products', productRouter);
 app.use('/api/articles', articleRouter);
-app.use(express.static('build'));
 app.use(errorsMiddleware);
 
 

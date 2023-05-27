@@ -20,10 +20,12 @@ class ProductController {
     async newProduct(req, res, next) {
         try {
             const data = req.body;
-            const {refreshToken} = req.cookies;
-            const newProduct = await ProductService.newProduct(data, refreshToken);
-            return res.status(200).json(newProduct);
+            const {refreshToken} = req.cookies
+            const newProd = await ProductService.newProduct(data, refreshToken);
+            console.log(newProd)
+            return res.json(newProd);
         } catch (e) {
+            console.log(e)
             next(e);
         }
     }
